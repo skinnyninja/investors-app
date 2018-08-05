@@ -1,0 +1,24 @@
+.investlog {
+  &__row + &__row {
+    border-top: 1px solid #ccc;
+    padding-top: 12px;
+    margin-top: 12px;
+  }
+
+  &__date,
+  &__desc,
+  &__value {
+    margin: 0;
+  }
+
+  &__desc,
+  &__value {
+    text-align: right;
+  }
+
+  @media (min-width: 576px) {
+    &__desc {
+      text-align: left;
+    }
+  }
+}

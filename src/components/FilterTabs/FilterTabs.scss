@@ -1,0 +1,27 @@
+$ftBorderRadius: 10px;
+
+.filter-tabs {
+  &__button {
+    color: white;
+    background: none;
+    display: block;
+    border: 0;
+    padding: 15px 5px;
+    width: 100%;
+    text-align: center;
+    font-family: "Open Sans";
+    font-size: 16px;
+    cursor: pointer;
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+    margin: 0;
+
+    &--active {
+      color: #6F748B;
+      background-color: white;
+      border-top-left-radius: $ftBorderRadius; 
+      border-top-right-radius: $ftBorderRadius; 
+    }
+  }
+}

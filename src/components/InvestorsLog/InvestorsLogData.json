@@ -1,0 +1,33 @@
+[
+  {
+    "date": "2017-02-15",
+    "color": "teal",
+    "desc": "Funds added to Plus",
+    "value": "£2,000.00"
+  }, {
+    "date": "2017-07-05",
+    "color": "navy",
+    "desc": "Repayments changed",
+    "value": "OFF"
+  }, {
+    "date": "2017-08-14",
+    "color": "navy",
+    "desc": "Repayments changed",
+    "value": "ON"
+  }, {
+    "date": "2017-12-11",
+    "color": "navy",
+    "desc": "Repayments changed",
+    "value": "OFF"
+  }, {
+    "date": "2018-02-21",
+    "color": "red",
+    "desc": "Funds removed from Plus",
+    "value": "£200.00"
+  }, {
+    "date": "2018-02-26",
+    "color": "red",
+    "desc": "Funds removed from Plus",
+    "value": "£20.00"
+  }
+]
