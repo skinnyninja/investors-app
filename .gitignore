@@ -2,7 +2,7 @@
 node_modules
 
 # Project
-dist
+
 
 .DS_Store
 *.log
