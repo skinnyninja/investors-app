@@ -2,77 +2,83 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const CompressionPlugin = require('compression-webpack-plugin');
 const dotenv = require('dotenv');
 
-const env = dotenv.config().parsed;
+const BaseConfig = require('./webpack.base.config')
 
+const env = dotenv.config().parsed;
 const envKeys = Object.keys(env).reduce((prev, next) => {
   prev[`process.env.${next}`] = JSON.stringify(env[next]);
   return prev;
 }, {});
 
-module.exports = {
-    entry: {
-      main:'./src/index.tsx'
-    },
-    output: {
-        filename: "[name].bundle.js",
-        path: path.resolve(__dirname, 'dist')
-    },
-    resolve: {
-        extensions: ['.js', '.json', '.ts', '.tsx'],
-    },
-    module: {
-      rules: [
-        {
-          test: /\.(ts|tsx)$/,
-          exclude: /node_modules/,
-          loader: "awesome-typescript-loader"
-        },
-        {
-          test: /\.scss$/,
-          use:  ['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader']
-        },
-        {
-          test: /\.(png|jpg|svg)$/,
-          use: [{
-            loader: 'file-loader',
-            options: {
-              // emitFile: false,
-              name: '[name].[ext]',
-              outputPath: 'img/'
-            }
-          }]
-        },
-        {
-          test: /\.(eot|ttf|woff|woff2)$/,
-          use: [{
-            loader: 'url-loader?limit=100000',
-            options: {
-              name: '[name].[ext]',
-              outputPath: 'fonts/'
-            }
-          }]
-        }
-      ]
-    },
+module.exports =  Object.assign({}, BaseConfig, {
+    output: Object.assign({}, BaseConfig.output, {
+      filename: '[name].bundle.js',
+      chunkFilename: '[name].bundle.js',
+    }),
     mode: 'production',
-    devtool: 'eval-source-map',
+    devtool: 'source-map',
     plugins: [
       new webpack.optimize.ModuleConcatenationPlugin(),
+      new webpack.EnvironmentPlugin({
+        NODE_ENV: 'production',
+        DEBUG: false
+      }),
       new webpack.DefinePlugin(envKeys),
+      new CompressionPlugin({
+        asset: '[path].gz[query]',
+        algorithm: 'gzip',
+        test: /\.(js|html)$/,
+        threshold: 10240,
+        minRatio: 0.8,
+      }),
       new MiniCssExtractPlugin({
         filename: '[name].style.css',
-        chunkFilename: "[id].css"
+        sourceMap: true
       }),
-      new CopyWebpackPlugin([
-        { from:'src/static/img', to: 'img' } 
-      ]), 
+      new CopyWebpackPlugin([{
+        from:'src/static/img',
+        to: 'img'
+      }]), 
       new HtmlWebpackPlugin({
         template: 'public/index.html',
-        filename: 'index.html'
+        sourceMap: true,
+        minify: {
+          removeComments: true,
+          collapseWhitespace: true,
+          removeRedundantAttributes: true,
+          useShortDoctype: true,
+          removeEmptyAttributes: true,
+          removeStyleLinkTypeAttributes: true,
+          keepClosingSlash: true,
+          minifyJS: true,
+          minifyCSS: true,
+          minifyURLs: true,
+        },
       }),
-      // new Dotenv(),
     ],
-};
+    optimization: {
+      minimizer: [
+        new UglifyJsPlugin({
+          sourceMap: true,
+          cache: true,
+          parallel: true,
+        }),
+        new OptimizeCSSAssetsPlugin({})
+      ],
+      splitChunks: {
+        cacheGroups: {
+          commons: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'async'
+          }
+        }
+      }
+    }
+});
