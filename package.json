@@ -2,7 +2,7 @@
   "name": "investor-performance-app",
   "version": "1.0.0",
   "description": "Investor Performance Application",
-  "author": "Daniel Luong <daniel.luong@zopa.com>",
+  "author": "Daniel Luong <>",
   "scripts": {
     "clean": "rimraf ./dist/",
     "build:env": "ENVIROMENT=uat node ./scripts/injectEnv.js",
