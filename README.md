@@ -1,12 +1,10 @@
-# Zopa Investors Performance App using React, Redux and Webpack
+# Performance App using React, Redux and Webpack
 
 ## INSTALL
 
 ```
 yarn
 ```
-
-Rename `.env.test` file to `.env`
 
 ## SCRIPTS
 
@@ -15,8 +13,4 @@ Rename `.env.test` file to `.env`
 - `production` - Builds the app for production
 - `start` - Starts the production server
 
-## HOOKS
 
-## DEVELOPMENT
-
-### Analytic Debugging
