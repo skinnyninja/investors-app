@@ -16,3 +16,11 @@ yarn
 - `dev` - Builds the app in development mode and starts the server (http://localhost:3000)
 - `production` - Builds the app for production
 - `start` - Starts the production server
+
+## SCREENSHOTS
+
+DESKTOP
+![desktop](https://github.com/skinnyninja/investors-app/blob/master/static/desktop.png)
+
+MOBILE
+![mobile](https://github.com/skinnyninja/investors-app/blob/master/static/mobile.png)
